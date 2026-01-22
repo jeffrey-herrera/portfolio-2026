@@ -1,0 +1,287 @@
+@import "tailwindcss";
+@import 'locomotive-scroll/dist/locomotive-scroll.css';
+
+
+
+/* ==============================================
+    FONTS
+============================================== */
+
+@font-face {
+  font-family: "Uncut Sans";
+  src: url("/fonts/UncutSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Uncut Sans";
+  src: url("/fonts/UncutSans-RegularItalic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Uncut Sans";
+  src: url("/fonts/UncutSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Uncut Sans";
+  src: url("/fonts/UncutSans-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Fragment";
+  src: url("/fonts/PPFragment-SerifRegular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==============================================
+    RESET
+============================================== */
+
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* 2. Remove default margin */
+  *:not(dialog) {
+    margin: 0;
+  }
+  
+  /* 3. Enable keyword animations */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+  
+  body {
+    /* 4. Add accessible line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+    font-family: "Uncut Sans", system-ui, -apple-system, sans-serif;
+    background: var(--color-orange-50);
+    color: var(--color-stone-950);
+  }
+  
+  /* 6. Improve media defaults */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* 7. Inherit fonts for form controls */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  
+  /* 8. Avoid text overflows */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  
+  /* 9. Improve line wrapping */
+  p {
+    text-wrap: pretty;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+  
+  /*
+    10. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+
+/* ==============================================
+    COLORS
+============================================== */
+
+:root {
+  --color-orange-50: oklch(0.98 0.016 73.684);
+  --color-orange-100: oklch(0.954 0.038 75.164);
+  --color-orange-200: oklch(0.901 0.076 70.697);
+  --color-orange-300: oklch(0.837 0.128 66.29);
+  --color-orange-400: oklch(0.75 0.183 55.934);
+  --color-orange-500: oklch(0.705 0.213 47.604);
+  --color-orange-600: oklch(0.646 0.222 41.116);
+  --color-orange-700: oklch(0.553 0.195 38.402);
+  --color-orange-800: oklch(0.47 0.157 37.304);
+  --color-orange-900: oklch(0.408 0.123 38.172);
+  --color-orange-950: oklch(0.266 0.079 36.259);
+  --color-amber-50: oklch(0.987 0.022 95.277);
+  --color-amber-100: oklch(0.962 0.059 95.617);
+  --color-amber-200: oklch(0.924 0.12 95.746);
+  --color-amber-300: oklch(0.879 0.169 91.605);
+  --color-amber-400: oklch(0.828 0.189 84.429);
+  --color-amber-500: oklch(0.769 0.188 70.08);
+  --color-amber-600: oklch(0.666 0.179 58.318);
+  --color-amber-700: oklch(0.555 0.163 48.998);
+  --color-amber-800: oklch(0.473 0.137 46.201);
+  --color-amber-900: oklch(0.414 0.112 45.904);
+  --color-amber-950: oklch(0.279 0.077 45.635);
+  --color-stone-50: oklch(0.985 0.001 106.423);
+  --color-stone-100: oklch(0.97 0.001 106.424);
+  --color-stone-200: oklch(0.923 0.003 48.717);
+  --color-stone-300: oklch(0.869 0.005 56.366);
+  --color-stone-400: oklch(0.709 0.01 56.259);
+  --color-stone-500: oklch(0.553 0.013 58.071);
+  --color-stone-600: oklch(0.444 0.011 73.639);
+  --color-stone-700: oklch(0.374 0.01 67.558);
+  --color-stone-800: oklch(0.268 0.007 34.298);
+  --color-stone-900: oklch(0.216 0.006 56.043);
+  --color-stone-950: oklch(0.147 0.004 49.25);
+  --color-black: #000;
+  --color-white: #fff;
+}
+
+/* ==============================================
+    WRAPPERS
+============================================== */
+
+.wrapper {
+    width: 100%;
+    max-width: 2000px;
+    margin-inline: auto;
+    padding-inline: 2rem;
+    
+    @media (max-width: 800px) {
+        padding-inline: 1rem;
+    }
+}
+
+.container-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+}
+
+/* ==============================================
+    TYPOGRAPHY
+============================================== */
+
+h1, h2 {
+  font-family: "PP Fragment", "Times New Roman", serif;
+  color: var(--color-stone-950);
+  font-variant-numeric: ordinal;
+  font-feature-settings: "cpsp" on, "dlig" on, "ss03" on, "ss04" on;
+  font-size: inherit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: inherit;
+  letter-spacing: -15%;
+  padding-bottom: 1rem;
+}
+
+/* ==============================================
+    COMPONENTS
+============================================== */
+
+.btn {
+    display: flex;
+    padding: 0 16px;
+    justify-content: center;
+    align-items: center;
+    gap: var(1rem, 0.5rem);
+    align-self: stretch;
+    border-radius: 999px;
+}
+
+.btn-primary {
+    border: 1px solid rgba(0, 0, 45, 0.09);
+    background: var(--color-orange-500);
+}
+
+.btn-secondary {
+    border: 1px solid rgba(0, 0, 45, 0.09);
+    background: var(--Orange-50, #FFF7ED);
+}
+
+.btn-premium {
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 45, 0.09);
+    background: linear-gradient(104deg, #FF6900 25.47%, #FFB900 94.46%);
+    box-shadow: 0 7px 20px 0 rgba(255, 105, 0, 0.50);
+}
+
+/* ==============================================
+    UTILITIES
+============================================== */
+
+.stroke {
+    border-top: 0.5px solid var(--color-stone-300);
+}
+
+/* ==============================================
+    ANIMATIONS
+============================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(0);
+  transition:
+    opacity 800ms ease-in-out,
+    transform 800ms ease-in-out;
+  will-change: opacity, transform;
+}
+
+.reveal--fade {
+  transform: translateY(0);
+}
+
+.reveal--up {
+  transform: translateY(1rem);
+}
+
+.reveal--left {
+  transform: translateX(-1rem);
+}
+
+.reveal--right {
+  transform: translateX(1rem);
+}
+
+.reveal.is-inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal--delay-short {
+  transition-delay: 100ms;
+}
+
+.reveal--delay-medium {
+  transition-delay: 200ms;
+}
+
+.reveal--delay-long {
+  transition-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+  }
+
+  .reveal,
+  .reveal.is-inview {
+    opacity: 1;
+    transform: none;
+  }
+}

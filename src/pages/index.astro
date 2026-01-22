@@ -1,16 +1,148 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import NumberedLink from "../components/NumberedLink.astro";
 
+const title = "Home";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={title}>
+	<section class="wrapper hero">
+		<SectionHeader class="hero__header">
+			<h1 class="headline">
+				<span>ÑYC</span>
+				<span class="headline-pill headline-pill--left" aria-hidden="true"></span>
+				<span>based</span>
+				<span>creative</span>
+				<span>director</span>
+				<span class="headline-pill headline-pill--right" aria-hidden="true"></span>
+				<span>shaping</span>
+				<NumberedLink number="01" label="brand" href="#brand" />
+				<span>experiences</span>
+				<span>across</span>
+				<NumberedLink number="02" label="physical" href="#physical" />
+				<span>&</span>
+				<NumberedLink number="03" label="digital." href="#digital" />
+			</h1>
+		</SectionHeader>
+		<div class="subhead">
+			<p>Currently Associate Creative Director of Brand & Experiential / Competitive Cold Brew Drinker at <a href="https://www.braze.com" target="_blank">Braze</a></p>
+		</div>
+	</section>
+	<section id="brand" class="wrapper project-section reveal reveal--fade">
+		<SectionHeader>
+			<NumberedLink number="01" label="Brand" numberAlign="top" small />
+		</SectionHeader>
+	</section>
+	<section id="physical" class="wrapper project-section reveal reveal--fade">
+		<SectionHeader>
+			<NumberedLink number="02" label="Physical" numberAlign="top" small />
+		</SectionHeader>
+	</section>
+	<section id="digital" class="wrapper project-section reveal reveal--fade">
+		<SectionHeader>
+			<NumberedLink number="03" label="Digital" numberAlign="top" small />
+		</SectionHeader>
+	</section>
+	<div class="dummy"></div>
+</Layout>
+
+<style>
+	.hero {
+		container-type: inline-size;
+	}
+
+	.subhead {
+		font-size: 1rem;
+		line-height: 1.5;
+		color: var(--color-stone-400);
+		margin-top: 1rem;
+		margin-bottom: 7rem;
+
+		@media (max-width: 800px) {
+			font-size: 1rem;
+		}
+	}
+	.headline {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		align-items: center;
+		width: 100%;
+		line-height: 1;
+
+		@media (max-width: 800px) {
+			line-height: 0.75;
+		}
+	}
+
+
+	.headline-pill {
+		position: relative;
+		display: inline-block;
+		width: 2.3em;
+		height: 0.875em;
+		border-radius: 1420.8px;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	.headline-pill::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0.1em;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		background-image: inherit;
+		background-size: inherit;
+		background-position: inherit;
+		background-repeat: inherit;
+		filter: blur(0.24em);
+		opacity: 0.6;
+		z-index: -1;
+	}
+
+	.headline-pill--left {
+		background-image: url("/images/hero-pill-left.png");
+	}
+
+	.headline-pill--right {
+		background-image: url("/images/hero-pill-right.png");
+	}
+	.dummy {
+		height: 100vh;
+		width: 100%;
+		background: var(--color-orange-50);
+	}
+	.project-section {
+		padding-bottom: 4rem;
+	}
+</style>
+
+<script is:inline>
+	const OFFSET = 196;
+	const heroAnchors = document.querySelectorAll('.hero a[href^="#"]');
+
+	heroAnchors.forEach((anchor) => {
+		anchor.addEventListener("click", (event) => {
+			const href = anchor.getAttribute("href");
+			if (!href || href === "#") return;
+
+			const target = document.querySelector(href);
+			if (!target) return;
+
+			event.preventDefault();
+			const targetTop =
+				target.getBoundingClientRect().top + window.scrollY - OFFSET;
+
+			window.scrollTo({
+				top: targetTop,
+				behavior: "smooth",
+			});
+		});
+	});
+
+</script>

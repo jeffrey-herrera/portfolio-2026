@@ -1,0 +1,77 @@
+---
+import Nav from "../components/Nav.astro";
+import "../styles/global.css";
+
+const { title = "" } = Astro.props;
+const fullTitle =
+	title && title.toLowerCase() !== "home"
+		? `Jeff Herrera — ${title}`
+		: "Jeff Herrera";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{fullTitle}</title>
+	</head>
+	<body>
+		<Nav />
+		<main class="">
+			<slot />
+		</main>
+		<script is:inline>
+			const revealElements = document.querySelectorAll(".reveal");
+			const prefersReducedMotion = window.matchMedia(
+				"(prefers-reduced-motion: reduce)"
+			);
+
+			if (revealElements.length > 0) {
+				if (prefersReducedMotion.matches) {
+					revealElements.forEach((element) =>
+						element.classList.add("is-inview")
+					);
+				} else {
+					const observer = new IntersectionObserver(
+						(entries, observerInstance) => {
+							entries.forEach((entry) => {
+								const element = entry.target;
+								const isOnce = element.classList.contains("reveal--once");
+
+								if (entry.isIntersecting) {
+									element.classList.add("is-inview");
+
+									if (isOnce) {
+										observerInstance.unobserve(element);
+									}
+								} else if (!isOnce) {
+									element.classList.remove("is-inview");
+								}
+							});
+						},
+						{
+							threshold: 0.2,
+							rootMargin: "0px 0px -10% 0px",
+						}
+					);
+
+					revealElements.forEach((element) => observer.observe(element));
+				}
+			}
+		</script>
+	</body>
+</html>
+
+<style>
+	main {
+		margin-top: 96px;
+	}
+
+	@media (max-width: 800px) {
+		main {
+			margin-top: 64px;
+		}
+	}
+</style>

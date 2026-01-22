@@ -1,0 +1,74 @@
+---
+const {
+	number,
+	label,
+	href,
+	numberAlign = "center",
+	small = false,
+	as,
+} = Astro.props;
+const Tag = as === "button" ? "button" : href ? "a" : "span";
+const isInteractive = Boolean(href) || as === "button";
+---
+
+<Tag
+	class={`numbered-link numbered-link--${numberAlign} ${
+		isInteractive ? "numbered-link--interactive" : ""
+	} ${small ? "numbered-link--small" : ""}`.trim()}
+	href={href}
+	type={Tag === "button" ? "button" : undefined}
+>
+	<span class="numbered-link__number">{number}</span>
+	<span class="numbered-link__label">{label}</span>
+</Tag>
+
+<style>
+	.numbered-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		text-decoration: none;
+	}
+
+	.numbered-link--top {
+		align-items: flex-start;
+	}
+
+	.numbered-link--small .numbered-link__number {
+		font-size: 0.65rem;
+		line-height: 1.2;
+	}
+	
+	.numbered-link__number {
+		font-family: "Uncut Sans", system-ui, -apple-system, sans-serif;
+		font-size: 0.75rem;
+		font-weight: 600;
+		line-height: 1;
+		letter-spacing: 0;
+		color: var(--color-orange-500);
+	}
+	
+	.numbered-link__label {
+		font-family: "PP Fragment", "Times New Roman", serif;
+		font-size: inherit;
+		font-style: normal;
+		font-weight: 400;
+		line-height: inherit;
+		letter-spacing: -18%;
+		color: var(--color-stone-950);
+		font-variant-numeric: ordinal;
+		font-feature-settings: "cpsp" on, "dlig" on, "ss03" on, "ss04" on;
+		transition: color 200ms ease;
+	}
+
+	.numbered-link--interactive {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+	}
+
+	.numbered-link--interactive:hover .numbered-link__label {
+		color: var(--color-orange-500);
+	}
+</style>
