@@ -1,3 +1,20 @@
+# Portfolio 2026
+
+## Stack
+- Astro
+- Tailwind CSS
+- Radix UI
+- GSAP
+
+## Libraries
+- Locomotive Scroll
+- Sanity client (`@sanity/client`, `@sanity/image-url`)
+- Portable Text (`@portabletext/to-html`)
+
+## Sanity Studio (./studio)
+- Sanity Studio
+- React
+- styled-components
 # Astro Starter Kit: Minimal
 
 ```sh
