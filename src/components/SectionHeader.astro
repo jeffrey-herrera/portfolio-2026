@@ -1,8 +1,10 @@
 ---
-const { class: className = "" } = Astro.props;
+const { class: className = "", hero = false } = Astro.props;
 ---
 
-<div class={`section-header stroke ${className}`.trim()}>
+<div
+	class={`section-header stroke ${hero ? "section-header--hero" : ""} ${className}`.trim()}
+>
     <div class="section-header__inner reveal reveal--up">        <slot />
     </div>
 </div>
@@ -18,7 +20,7 @@ const { class: className = "" } = Astro.props;
         line-height: 1;
     }
 
-    .section-header.hero__header {
+	.section-header--hero {
         padding-top: 2rem;
         font-size: clamp(2rem, 4.25cqi, 5.375rem);
     }

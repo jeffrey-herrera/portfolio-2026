@@ -1,0 +1,120 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import Button from "../components/Button.astro";
+
+const title = "System";
+---
+
+<Layout title={title}>
+	<section class="wrapper system">
+		<SectionHeader hero>
+			<h1 class="system__title">System</h1>
+		</SectionHeader>
+		<div class="system__group">
+			<div class="system__grid">
+				<h2 class="system__heading">Buttons</h2>
+				<div class="system__column">
+					<div class="system__label">Primary</div>
+					<div class="system__items">
+						<Button variant="primary" size="sm">Small</Button>
+						<Button variant="primary" size="md">Medium</Button>
+						<Button variant="primary" size="lg">Large</Button>
+					</div>
+				</div>
+				<div class="system__column">
+					<div class="system__label">Secondary</div>
+					<div class="system__items">
+						<Button variant="secondary" size="sm">Small</Button>
+						<Button variant="secondary" size="md">Medium</Button>
+						<Button variant="secondary" size="lg">Large</Button>
+					</div>
+				</div>
+				<div class="system__column">
+					<div class="system__label">Premium</div>
+					<div class="system__items">
+						<Button variant="premium" size="sm">Small</Button>
+						<Button variant="premium" size="md">Medium</Button>
+						<Button variant="premium" size="lg">Large</Button>
+					</div>
+				</div>
+				<div class="system__column">
+					<div class="system__label">Disabled</div>
+					<div class="system__items">
+						<Button variant="primary" size="md" disabled>Primary</Button>
+						<Button variant="secondary" size="md" disabled>Secondary</Button>
+						<Button variant="premium" size="md" disabled>Premium</Button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.system {
+		padding-bottom: 6rem;
+	}
+
+	.system__title {
+		font-size: 2.5rem;
+		line-height: 1;
+		margin-bottom: 2rem;
+	}
+
+	.system__group {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.system__heading {
+		font-family: "Uncut Sans", system-ui, -apple-system, sans-serif;
+		font-size: 1.5rem;
+		font-weight: 600;
+		line-height: 1;
+		color: var(--color-stone-950);
+		margin: 0;
+	}
+
+	.system__grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-rows: auto 1fr;
+		grid-column-gap: 1rem;
+		grid-row-gap: 1.5rem;
+		gap: 1rem;
+		border: 0.5px solid var(--color-stone-300);
+		border-radius: 16px;
+		padding: 1.5rem;
+		background: var(--color-orange-50);
+	}
+
+	.system__label {
+		color: var(--color-stone-500);
+		font-size: 0.95rem;
+		margin-bottom: 1rem;
+	}
+
+	.system__heading {
+		grid-column: 1 / -1;
+	}
+
+	.system__items {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		align-items: flex-start;
+	}
+
+	@media (max-width: 900px) {
+		.system__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 600px) {
+		.system__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

@@ -195,29 +195,70 @@ h1, h2 {
 
 .btn {
     display: flex;
-    padding: 0 16px;
+    padding: var(--btn-pad-y) calc(var(--btn-pad-y) * 2);
     justify-content: center;
     align-items: center;
     gap: var(1rem, 0.5rem);
-    align-self: stretch;
     border-radius: 999px;
+    cursor: pointer;
+    transition: all 200ms ease;
+}
+
+.btn--sm {
+    --btn-pad-y: 8px;
+    font-size: 0.875rem;
+    line-height: 1;
+}
+
+.btn--md {
+    --btn-pad-y: 10px;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.btn--lg {
+    --btn-pad-y: 12px;
+    font-size: 1.125rem;
+    line-height: 1;
 }
 
 .btn-primary {
-    border: 1px solid rgba(0, 0, 45, 0.09);
     background: var(--color-orange-500);
+    color: var(--color-orange-50);
+}
+
+.btn-primary:hover {
+    background: var(--color-orange-600);
 }
 
 .btn-secondary {
     border: 1px solid rgba(0, 0, 45, 0.09);
     background: var(--Orange-50, #FFF7ED);
+  }
+  
+  .btn-secondary:hover {
+    border-color: var(--color-orange-500);
+  }
+  
+  .btn-premium {
+    border-radius: 999px;
+    color: var(--color-orange-50);
+    background: linear-gradient(104deg, var(--color-orange-500) 25.47%, var(--color-amber-500) 94.46%);
+    box-shadow: 0 7px 20px 0 rgba(255, 105, 0, 0.50);
+  }
+  
+  .btn-premium:hover {
+    background: linear-gradient(104deg, var(--color-orange-600) 10%, var(--color-orange-400) 94.46%);
+    box-shadow: 0 5px 14px 0 rgba(255, 105, 0, 0.45);
 }
 
-.btn-premium {
-    border-radius: 999px;
-    border: 1px solid rgba(0, 0, 45, 0.09);
-    background: linear-gradient(104deg, #FF6900 25.47%, #FFB900 94.46%);
-    box-shadow: 0 7px 20px 0 rgba(255, 105, 0, 0.50);
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+    filter: none;
+    pointer-events: none;
 }
 
 /* ==============================================
