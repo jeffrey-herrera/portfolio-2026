@@ -1,12 +1,123 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import SectionHeader from "../components/SectionHeader.astro";
+import { toHTML } from "@portabletext/to-html";
+import { getAbout } from "../sanity/queries";
+
+const about = await getAbout();
+
+const aboutHtml = about?.bio
+	? toHTML(about.bio, {
+			components: {
+				types: {
+					spacer: () => "<br />",
+				},
+			},
+		})
+	: "";
+const heading = about?.title ?? "About";
+const capabilities = about?.capabilities ?? [];
+const awards = about?.awards ?? [];
 ---
 
 <Layout title="About">
 	<section class="wrapper">
 		<SectionHeader>
-			<h1>About</h1>
+			<h1 class="reveal reveal--up">{heading}</h1>
 		</SectionHeader>
+		<article class="about-content reveal reveal--fade reveal--delay-medium reveal--once">
+			<div class="about-content__text portable-text">
+				{aboutHtml ? (
+					<Fragment set:html={aboutHtml} />
+				) : (
+					<>
+						<p>
+							Coming soon...
+						</p>
+					</>
+				)}
+			</div>
+			<aside class="about-content__aside portable-text">
+				{capabilities.length > 0 && (
+					<section class="about-content__section">
+						<h3>Capabilities</h3>
+						<ul>
+							{capabilities.map((capability) => (
+								<li>{capability}</li>
+							))}
+						</ul>
+					</section>
+				)}
+				{awards.length > 0 && (
+					<section class="about-content__section">
+						<h3>Awards</h3>
+						<ul>
+							{awards.map((award) => {
+								const meta = [award.issuer, award.year].filter(Boolean).join(" - ");
+								return (
+									<li>
+										{award.url ? (
+											<a href={award.url} target="_blank" rel="noreferrer">
+												{award.title}
+											</a>
+										) : (
+											<span>{award.title}</span>
+										)}
+										{meta ? ` — ${meta}` : ""}
+									</li>
+								);
+							})}
+						</ul>
+					</section>
+				)}
+			</aside>
+		</article>
 	</section>
 </Layout>
+
+<style>
+	.about-content {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		gap: 0;
+		margin-top: 5rem;
+		
+		@media (max-width: 960px) {
+				grid-template-columns: 1fr;
+		}
+	}
+
+	.about-content__text {
+		grid-column: 1 / 7;
+		padding-right: 1.5rem;
+	}
+
+	.about-content__aside {
+		grid-column: 10 / -1;
+		display: grid;
+		gap: 2rem;
+	}
+
+	.about-content__section {
+		margin-bottom: 2rem;
+	}
+
+	.about-content__section h3 {
+		margin-bottom: 1rem;
+		color: var(--color-stone-400);
+	}
+	.about-content__section ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	@media (max-width: 960px) {
+		.about-content__text,
+		.about-content__aside {
+			grid-column: 1 / -1;
+			padding: 0;
+		}
+	}
+
+</style>

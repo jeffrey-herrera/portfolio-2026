@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import 'locomotive-scroll/dist/locomotive-scroll.css';
 
 
 
@@ -72,9 +71,11 @@
     /* 4. Add accessible line-height */
     line-height: 1.5;
     /* 5. Improve text rendering */
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+    text-rendering: optimizeLegibility;
     font-family: "Uncut Sans", system-ui, -apple-system, sans-serif;
-    background: var(--color-orange-50);
+    background: var(--color-background);
     color: var(--color-stone-950);
   }
   
@@ -114,6 +115,7 @@
 ============================================== */
 
 :root {
+  --color-background: #FBF5E7;
   --color-orange-50: oklch(0.98 0.016 73.684);
   --color-orange-100: oklch(0.954 0.038 75.164);
   --color-orange-200: oklch(0.901 0.076 70.697);
@@ -159,7 +161,7 @@
     width: 100%;
     max-width: 2000px;
     margin-inline: auto;
-    padding-inline: 2rem;
+    padding-inline: 4rem;
     
     @media (max-width: 800px) {
         padding-inline: 1rem;
@@ -270,6 +272,114 @@ h1, h2 {
 }
 
 /* ==============================================
+    PORTABLE TEXT
+============================================== */
+
+.portable-text {
+  font-family: "Uncut Sans", system-ui, -apple-system, sans-serif;
+  color: var(--color-stone-950);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.portable-text p {
+  text-wrap: balance;
+  margin-bottom: 1rem;
+  color: var(--color-stone-950);
+}
+
+.portable-text p:last-child {
+  margin-bottom: 0;
+}
+
+.portable-text strong {
+  font-weight: 600;
+  color: var(--color-stone-950);
+}
+
+.portable-text em {
+  font-style: italic;
+}
+
+.portable-text a {
+  color: var(--color-orange-500);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.portable-text a:hover {
+  color: var(--color-orange-600);
+}
+
+.portable-text h2 {
+  font-family: "PP Fragment", "Times New Roman", serif;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  margin: 2rem 0 1rem;
+  color: var(--color-stone-950);
+}
+
+.portable-text ul,
+.portable-text ol {
+  margin: 1rem 0 1.5rem;
+  padding-left: 1.5rem;
+
+  list-style-position: outside;
+}
+
+.portable-text ul {
+  list-style: disc;
+}
+
+.portable-text ol {
+  list-style: decimal;
+}
+
+.portable-text li {
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+
+.portable-text li::marker {
+  color: var(--color-orange-500);
+}
+
+.portable-text li:last-child {
+  margin-bottom: 0;
+}
+
+/* ==============================================
+    CURSOR
+============================================== */
+
+[data-cursor-target] {
+  position: relative;
+  cursor: none;
+}
+
+.cursor-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--cursor-size, 35px);
+  height: var(--cursor-size, 35px);
+  background-image: var(--cursor-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
+  z-index: 2;
+}
+
+[data-cursor-target].is-cursor-active .cursor-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ==============================================
     ANIMATIONS
 ============================================== */
 
@@ -277,8 +387,8 @@ h1, h2 {
   opacity: 0;
   transform: translateY(0);
   transition:
-    opacity 800ms ease-in-out,
-    transform 800ms ease-in-out;
+    opacity 600ms ease-in-out,
+    transform 600ms ease-in-out;
   will-change: opacity, transform;
 }
 
@@ -313,6 +423,10 @@ h1, h2 {
 
 .reveal--delay-long {
   transition-delay: 300ms;
+}
+
+.reveal--fast {
+  transition-duration: 300ms;
 }
 
 @media (prefers-reduced-motion: reduce) {

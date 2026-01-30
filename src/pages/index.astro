@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import NumberedLink from "../components/NumberedLink.astro";
+import Project from "../components/Project.astro";
 
 const title = "Home";
 ---
@@ -9,7 +10,7 @@ const title = "Home";
 <Layout title={title}>
 	<section class="wrapper hero">
 		<SectionHeader hero>
-			<h1 class="headline">
+			<h1 class="headline reveal reveal--up">
 				<span>ÑYC</span>
 				<span class="headline-pill headline-pill--left" aria-hidden="true"></span>
 				<span>based</span>
@@ -29,18 +30,81 @@ const title = "Home";
 			<p>Currently Associate Creative Director of Brand & Experiential / Competitive Cold Brew Drinker at <a href="https://www.braze.com" target="_blank">Braze</a></p>
 		</div>
 	</section>
-	<section id="brand" class="wrapper project-section reveal reveal--fade">
-		<SectionHeader>
+	<section id="brand" class="wrapper project-section">
+		<SectionHeader class="project-section__header">
 			<NumberedLink number="01" label="Brand" numberAlign="top" small />
 		</SectionHeader>
+		<div class="project-grid">
+			<Project
+				title="Braze Rebrand"
+				subtitle="Brand identity system"
+				category="Brand"
+				href="#"
+				imageSrc="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80"
+				large
+			/>
+			<Project
+				title="Living Proof"
+				subtitle="Product launch kit"
+				category="Brand"
+				href="#"
+				imageSrc="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1400&q=80"
+				medium
+				center
+			/>
+			<Project
+				title="Signal"
+				subtitle="Campaign assets"
+				category="Brand"
+				href="#"
+				imageSrc="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80"
+				small
+				right
+			/>
+			<Project
+				title="Commonplace"
+				subtitle="Packaging system"
+				category="Brand"
+				href="#"
+				imageSrc="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80"
+				medium
+				left
+			/>
+			<Project
+				title="Noura"
+				subtitle="Identity refresh"
+				category="Brand"
+				href="#"
+				imageSrc="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80"
+				medium
+				right
+			/>
+			<Project
+				title="Somerville"
+				subtitle="Retail rollout"
+				category="Brand"
+				href="#"
+				imageSrc="https://images.unsplash.com/photo-1471879832106-c7ab9e0cee23?auto=format&fit=crop&w=1200&q=80"
+				small
+				left
+			/>
+			<Project
+				title="Evergreen"
+				subtitle="Brand guidelines"
+				category="Brand"
+				href="#"
+				imageSrc="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80"
+				large
+			/>
+		</div>
 	</section>
-	<section id="physical" class="wrapper project-section reveal reveal--fade">
-		<SectionHeader>
+	<section id="physical" class="wrapper project-section">
+		<SectionHeader class="project-section__header">
 			<NumberedLink number="02" label="Physical" numberAlign="top" small />
 		</SectionHeader>
 	</section>
-	<section id="digital" class="wrapper project-section reveal reveal--fade">
-		<SectionHeader>
+	<section id="digital" class="wrapper project-section">
+		<SectionHeader class="project-section__header">
 			<NumberedLink number="03" label="Digital" numberAlign="top" small />
 		</SectionHeader>
 	</section>
@@ -50,19 +114,28 @@ const title = "Home";
 <style>
 	.hero {
 		container-type: inline-size;
+
+		@media (min-width: 960px) {
+			height: 50vh;
+		}
 	}
 
 	.subhead {
-		font-size: 1rem;
+		font-size: clamp(1rem, 2vw, 1.2rem);
 		line-height: 1.5;
 		color: var(--color-stone-400);
-		margin-top: 1rem;
+		margin-top: 2.5rem;
 		margin-bottom: 7rem;
 
-		@media (max-width: 800px) {
-			font-size: 1rem;
+		& a {
+			color: var(--color-stone-500);
+			transition: color 200ms ease;
+		}
+		& a:hover {
+			color: var(--color-orange-500);
 		}
 	}
+
 	.headline {
 		display: flex;
 		flex-wrap: wrap;
@@ -112,18 +185,28 @@ const title = "Home";
 	.headline-pill--right {
 		background-image: url("/images/hero-pill-right.png");
 	}
-	.dummy {
-		height: 100vh;
-		width: 100%;
-		background: var(--color-orange-50);
-	}
+
 	.project-section {
 		padding-bottom: 4rem;
 	}
+
+	.project-grid {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		gap: 8rem 4rem;
+		margin-top: 5rem;
+		align-items: start;
+
+		@media (max-width: 800px) {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+	}
+
 </style>
 
 <script is:inline>
-	const OFFSET = 196;
+	const OFFSET = 96;
 	const heroAnchors = document.querySelectorAll('.hero a[href^="#"]');
 
 	heroAnchors.forEach((anchor) => {

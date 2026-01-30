@@ -5,14 +5,15 @@ const { class: className = "", hero = false } = Astro.props;
 <div
 	class={`section-header stroke ${hero ? "section-header--hero" : ""} ${className}`.trim()}
 >
-    <div class="section-header__inner reveal reveal--up">        <slot />
-    </div>
+	<div class="section-header__inner">
+		<slot />
+	</div>
 </div>
 
 <style>
     .section-header {
         display: flex;
-        padding-top: 0.5rem;
+        padding-top: 1rem;
         flex-direction: column;
         align-items: flex-start;
         align-self: stretch;

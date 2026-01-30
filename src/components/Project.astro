@@ -1,0 +1,130 @@
+---
+const {
+	title = "Name of Work",
+	subtitle = "",
+	category = "Brand",
+	href = "#",
+	imageSrc = "https://placehold.co/1200x675/png?text=Project",
+	imageAlt = title,
+	small = false,
+	medium = false,
+	large = false,
+	left = false,
+	center = false,
+	right = false,
+} = Astro.props;
+
+const size = small ? "small" : medium ? "medium" : large ? "large" : "medium";
+const align = left ? "left" : center ? "center" : right ? "right" : "left";
+
+const spanMap = {
+	small: 3,
+	medium: 7,
+	large: 12,
+};
+
+const span = spanMap[size];
+const start =
+	align === "left"
+		? 1
+		: align === "center"
+			? Math.floor((12 - span) / 2) + 1
+			: 12 - span + 1;
+---
+
+<a
+	class={`project project--${size} reveal reveal--up reveal--fast reveal--once`.trim()}
+	href={href}
+	data-cursor-target
+	style={`--project-span:${span}; --project-start:${start}; --cursor-image: url("https://www.figma.com/api/mcp/asset/b843860c-de19-4c32-9f0f-5c981897ae1a");`}
+>
+	<span class="cursor-icon" aria-hidden="true"></span>
+	<div class="project__info">
+		<p class="project__name">{title}</p>
+		<p class="project__type">{category}</p>
+	</div>
+	<div class="project__media">
+		<img class="project__image" src={imageSrc} alt={imageAlt} loading="lazy" />
+	</div>
+</a>
+
+<style>
+	.project {
+		display: grid;
+		gap: 8px;
+		text-decoration: none;
+		color: var(--color-stone-950);
+		grid-column: var(--project-start) / span var(--project-span);
+		align-self: start;
+	}
+
+	.project__media {
+		position: relative;
+		overflow: hidden;
+		border-radius: 2px;
+		background: var(--color-orange-100);
+		transition: box-shadow 300ms ease;
+	}
+
+
+	.project__image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transform: scale(1);
+		transition: transform 500ms ease;
+	}
+
+	.project--small .project__media {
+		aspect-ratio: 1 / 1;
+	}
+
+	.project--medium .project__media,
+	.project--large .project__media {
+		aspect-ratio: 16 / 9;
+	}
+
+	.project__info {
+		display: flex;
+		gap: 8px;
+		justify-content: space-between;
+		align-items: center;
+		font-family: "Uncut Sans", system-ui, -apple-system, sans-serif;
+		line-height: 1.15;
+	}
+
+	.project__name {
+		margin: 0;
+		font-size: 1rem;
+		color: var(--color-stone-950);
+		transition: all 200ms ease;
+	}
+
+	.project__type {
+		margin: 0;
+		color: var(--color-stone-400);
+	}
+
+	.project__subtitle {
+		margin: 0;
+		font-size: 12px;
+		color: var(--color-stone-500);
+	}
+
+	.project:hover .project__image {
+		transform: scale(1.075);
+	}
+
+	.project:hover .project__media {
+	}
+
+	.project:hover .project__name {
+		color: var(--color-orange-500);
+	}
+
+	@media (max-width: 800px) {
+		.project {
+			grid-column: 1 / -1;
+		}
+	}
+</style>

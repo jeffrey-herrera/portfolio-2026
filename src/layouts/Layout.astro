@@ -60,6 +60,29 @@ const fullTitle =
 					revealElements.forEach((element) => observer.observe(element));
 				}
 			}
+
+			const cursorTargets = document.querySelectorAll("[data-cursor-target]");
+			cursorTargets.forEach((card) => {
+				const cursor = card.querySelector(".cursor-icon");
+				if (!cursor) return;
+
+				const updateCursor = (event) => {
+					const rect = card.getBoundingClientRect();
+					cursor.style.left = `${event.clientX - rect.left}px`;
+					cursor.style.top = `${event.clientY - rect.top}px`;
+				};
+
+				card.addEventListener("mouseenter", (event) => {
+					card.classList.add("is-cursor-active");
+					updateCursor(event);
+				});
+
+				card.addEventListener("mousemove", updateCursor);
+
+				card.addEventListener("mouseleave", () => {
+					card.classList.remove("is-cursor-active");
+				});
+			});
 		</script>
 	</body>
 </html>

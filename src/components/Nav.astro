@@ -45,7 +45,7 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
       </ul>
     </div>
     <button class="nav__contact" type="button" data-nav-toggle aria-expanded="false">
-      <span class="nav__contact-label">&uparrow; Contact</span>
+      <span class="nav__contact-label">Contact</span>
       <span class="nav__icon nav__icon--menu" aria-hidden="true">
         <svg viewBox="0 0 24 24" role="presentation">
           <path
@@ -138,7 +138,7 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
   }
 
   .nav--shell {
-    background-color: color-mix(in srgb, var(--color-orange-50) 80%, transparent);
+    background-color: color-mix(in srgb, var(--color-background) 80%, transparent);
     backdrop-filter: blur(8px);
     --nav-social-height: 0px;
     --nav-peek: 24px;
@@ -161,7 +161,7 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
   }
 
   .nav__overlay[data-open='true'] {
-    background-color: color-mix(in srgb, var(--color-orange-50) 80%, transparent);
+    background-color: color-mix(in srgb, var(--color-background) 80%, transparent);
     backdrop-filter: blur(12px);
     pointer-events: auto;
     transition-delay: 0ms;
@@ -186,10 +186,13 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 2.5rem 2rem 3rem;
+    padding: 3rem;
+    width: calc(100% + 3rem);
+    margin-inline: -1.5rem;
     background-color: var(--color-orange-500);
-    border-bottom-left-radius: 2rem;
-    border-bottom-right-radius: 2rem;
+    border-bottom-left-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    overflow: hidden;
     transform: translateY(0);
     opacity: 1;
     pointer-events: none;
@@ -225,8 +228,9 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
   .nav__row {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    margin-top: 1rem;
+    align-items: center;
     gap: 0;
+    height: 64px;
   }
 
   .nav__row--mobile {
@@ -234,7 +238,7 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
   }
 
   .nav__brand {
-    grid-column: span 2;
+    grid-column: span 3;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -265,7 +269,6 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
 
   .nav__link-item {
     grid-column: span 2;
-    text-align: center;
   }
 
   .nav__link {
@@ -281,20 +284,33 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
   }
 
   .nav__link--active {
-    color: var(--color-orange-500);
+    color: var(--color-stone-400);
     pointer-events: none;
   }
 
   .nav__contact {
-    grid-column: span 2;
+    grid-column: span 1;
     text-align: right;
     cursor: pointer;
     color: var(--color-orange-500);
     background: none;
     border: none;
     padding: 0;
-  }
+    height: 32px;
+    width: 100px;
+    border: 1px solid var(--color-orange-500);
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: background-color 200ms ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+  } 
 
+  .nav__contact:hover {
+    background-color: var(--color-orange-400);
+  }
   .nav__contact-label {
     transition: color 200ms ease;
   }
@@ -373,6 +389,9 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
     .nav__contact {
       grid-column: span 2;
       justify-self: end;
+      width: 40px;
+      height: 40px;
+      padding: 0;
     }
 
     .nav__contact-label {
