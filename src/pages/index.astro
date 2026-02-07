@@ -7,7 +7,10 @@ import Project from "../components/Project.astro";
 const title = "Home";
 ---
 
-<Layout title={title}>
+<Layout
+	title={title}
+	description="NYC-based creative director portfolio featuring brand, physical, and digital work."
+>
 	<section class="wrapper hero">
 		<SectionHeader hero>
 			<h1 class="headline reveal reveal--up">
@@ -27,7 +30,7 @@ const title = "Home";
 			</h1>
 		</SectionHeader>
 		<div class="subhead">
-			<p>Currently Associate Creative Director of Brand & Experiential / Competitive Cold Brew Drinker at <a href="https://www.braze.com" target="_blank">Braze</a></p>
+			<p>Currently Associate Creative Director of Brand & Experiential / Competitive Cold Brew Drinker at <a href="https://www.braze.com" target="_blank" rel="noopener noreferrer">Braze</a></p>
 		</div>
 	</section>
 	<section id="brand" class="wrapper project-section">
@@ -40,7 +43,7 @@ const title = "Home";
 				subtitle="Brand identity system"
 				category="Brand"
 				href="#"
-				imageSrc="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80"
+				imageSrc="/images/project-placeholder-landscape.svg"
 				large
 			/>
 			<Project
@@ -48,7 +51,7 @@ const title = "Home";
 				subtitle="Product launch kit"
 				category="Brand"
 				href="#"
-				imageSrc="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1400&q=80"
+				imageSrc="/images/project-placeholder-landscape.svg"
 				medium
 				center
 			/>
@@ -57,7 +60,7 @@ const title = "Home";
 				subtitle="Campaign assets"
 				category="Brand"
 				href="#"
-				imageSrc="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80"
+				imageSrc="/images/project-placeholder-square.svg"
 				small
 				right
 			/>
@@ -66,7 +69,7 @@ const title = "Home";
 				subtitle="Packaging system"
 				category="Brand"
 				href="#"
-				imageSrc="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80"
+				imageSrc="/images/project-placeholder-landscape.svg"
 				medium
 				left
 			/>
@@ -75,7 +78,7 @@ const title = "Home";
 				subtitle="Identity refresh"
 				category="Brand"
 				href="#"
-				imageSrc="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80"
+				imageSrc="/images/project-placeholder-landscape.svg"
 				medium
 				right
 			/>
@@ -84,7 +87,7 @@ const title = "Home";
 				subtitle="Retail rollout"
 				category="Brand"
 				href="#"
-				imageSrc="https://images.unsplash.com/photo-1471879832106-c7ab9e0cee23?auto=format&fit=crop&w=1200&q=80"
+				imageSrc="/images/project-placeholder-square.svg"
 				small
 				left
 			/>
@@ -93,7 +96,7 @@ const title = "Home";
 				subtitle="Brand guidelines"
 				category="Brand"
 				href="#"
-				imageSrc="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80"
+				imageSrc="/images/project-placeholder-landscape.svg"
 				large
 			/>
 		</div>
@@ -179,11 +182,11 @@ const title = "Home";
 	}
 
 	.headline-pill--left {
-		background-image: url("/images/hero-pill-left.png");
+		background-image: url("/images/hero-pill-left.webp");
 	}
 
 	.headline-pill--right {
-		background-image: url("/images/hero-pill-right.png");
+		background-image: url("/images/hero-pill-right.webp");
 	}
 
 	.project-section {

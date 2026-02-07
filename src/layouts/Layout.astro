@@ -1,12 +1,19 @@
 ---
 import Nav from "../components/Nav.astro";
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 const { title = "" } = Astro.props;
+const {
+	description = "Jeff Herrera is a NYC-based creative director shaping brand, physical, and digital experiences.",
+	ogImage = "/images/seo-image.webp",
+} = Astro.props;
 const fullTitle =
 	title && title.toLowerCase() !== "home"
 		? `Jeff Herrera — ${title}`
 		: "Jeff Herrera";
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
+const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).toString();
 ---
 
 <html lang="en">
@@ -15,7 +22,19 @@ const fullTitle =
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
 		<title>{fullTitle}</title>
+		<ClientRouter />
 	</head>
 	<body>
 		<Nav />
@@ -23,17 +42,22 @@ const fullTitle =
 			<slot />
 		</main>
 		<script is:inline>
-			const revealElements = document.querySelectorAll(".reveal");
-			const prefersReducedMotion = window.matchMedia(
-				"(prefers-reduced-motion: reduce)"
-			);
+			const setupReveal = () => {
+				const revealElements = document.querySelectorAll(".reveal");
+				if (revealElements.length === 0) return;
 
-			if (revealElements.length > 0) {
-				if (prefersReducedMotion.matches) {
-					revealElements.forEach((element) =>
-						element.classList.add("is-inview")
+				try {
+					const prefersReducedMotion = window.matchMedia(
+						"(prefers-reduced-motion: reduce)"
 					);
-				} else {
+
+					if (prefersReducedMotion.matches) {
+						revealElements.forEach((element) =>
+							element.classList.add("is-inview")
+						);
+						return;
+					}
+
 					const observer = new IntersectionObserver(
 						(entries, observerInstance) => {
 							entries.forEach((entry) => {
@@ -42,47 +66,77 @@ const fullTitle =
 
 								if (entry.isIntersecting) {
 									element.classList.add("is-inview");
-
-									if (isOnce) {
-										observerInstance.unobserve(element);
-									}
+									if (isOnce) observerInstance.unobserve(element);
 								} else if (!isOnce) {
 									element.classList.remove("is-inview");
 								}
 							});
 						},
 						{
-							threshold: 0.2,
-							rootMargin: "0px 0px -10% 0px",
+							threshold: 0,
+							rootMargin: "0px",
 						}
 					);
 
 					revealElements.forEach((element) => observer.observe(element));
+				} catch {
+					// Fallback: never hide content if observer setup fails.
+					revealElements.forEach((element) => element.classList.add("is-inview"));
 				}
-			}
+			};
 
-			const cursorTargets = document.querySelectorAll("[data-cursor-target]");
-			cursorTargets.forEach((card) => {
-				const cursor = card.querySelector(".cursor-icon");
-				if (!cursor) return;
+			setupReveal();
+			document.addEventListener("astro:page-load", setupReveal);
+		</script>
+		<script>
+			import { gsap } from "gsap";
 
-				const updateCursor = (event) => {
-					const rect = card.getBoundingClientRect();
-					cursor.style.left = `${event.clientX - rect.left}px`;
-					cursor.style.top = `${event.clientY - rect.top}px`;
-				};
+			const setupCursorLag = () => {
+				const cursorTargets = document.querySelectorAll("[data-cursor-target]");
+				cursorTargets.forEach((card) => {
+					const cursor = card.querySelector(".cursor-icon");
+					if (!cursor || card.dataset.cursorBound === "true") return;
+					card.dataset.cursorBound = "true";
 
-				card.addEventListener("mouseenter", (event) => {
-					card.classList.add("is-cursor-active");
-					updateCursor(event);
+					const target = { x: 0, y: 0 };
+					const current = { x: 0, y: 0 };
+					let isTracking = false;
+
+					const tick = () => {
+						if (!isTracking) return;
+						current.x += (target.x - current.x) * 0.16;
+						current.y += (target.y - current.y) * 0.16;
+						gsap.set(cursor, { left: current.x, top: current.y });
+					};
+
+					const updateCursor = (event) => {
+						const rect = card.getBoundingClientRect();
+						target.x = event.clientX - rect.left;
+						target.y = event.clientY - rect.top;
+					};
+
+					card.addEventListener("mouseenter", (event) => {
+						card.classList.add("is-cursor-active");
+						updateCursor(event);
+						current.x = target.x;
+						current.y = target.y;
+						gsap.set(cursor, { left: current.x, top: current.y });
+						if (!isTracking) {
+							isTracking = true;
+							gsap.ticker.add(tick);
+						}
+					});
+					card.addEventListener("mousemove", updateCursor);
+					card.addEventListener("mouseleave", () => {
+						card.classList.remove("is-cursor-active");
+						isTracking = false;
+						gsap.ticker.remove(tick);
+					});
 				});
+			};
 
-				card.addEventListener("mousemove", updateCursor);
-
-				card.addEventListener("mouseleave", () => {
-					card.classList.remove("is-cursor-active");
-				});
-			});
+			setupCursorLag();
+			document.addEventListener("astro:page-load", setupCursorLag);
 		</script>
 	</body>
 </html>

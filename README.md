@@ -3,7 +3,7 @@
 ## Stack
 - Astro
 - Tailwind CSS
-- Radix UI
+- shadcn/ui (planned)
 - GSAP
 
 ## Libraries

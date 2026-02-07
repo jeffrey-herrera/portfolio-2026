@@ -1,0 +1,57 @@
+---
+interface LinkItem {
+  href: string;
+  label: string;
+  active: boolean;
+}
+
+const { links } = Astro.props as { links: LinkItem[] };
+---
+
+<nav class="nav__row nav__row--desktop">
+  <a href="/" class="nav__brand">
+    <img src="/favicon.svg" alt="Jeff Herrera home" class="nav__brand-icon" />
+    <span class="nav__brand-text">Jeff Herrera</span>
+  </a>
+  <div class="nav__links">
+    <ul class="nav__links-grid">
+      {links.map((link) => (
+        <li class="nav__link-item">
+          <a
+            href={link.href}
+            aria-current={link.active ? "page" : undefined}
+            data-nav-link
+            class={`nav__link ${link.active ? "nav__link--active" : ""}`}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <button class="nav__contact" type="button" data-nav-toggle aria-expanded="false" aria-label="Open contact menu">
+    <span class="nav__contact-label">Contact</span>
+    <span class="nav__icon nav__icon--menu" aria-hidden="true">
+      <svg viewBox="0 0 24 24" role="presentation">
+        <path
+          d="M4 7h16M4 12h16M4 17h16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+    </span>
+    <span class="nav__icon nav__icon--close" aria-hidden="true">
+      <svg viewBox="0 0 24 24" role="presentation">
+        <path
+          d="M6 6l12 12M18 6l-12 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+    </span>
+  </button>
+</nav>

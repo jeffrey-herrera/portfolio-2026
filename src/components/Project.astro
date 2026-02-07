@@ -30,13 +30,15 @@ const start =
 		: align === "center"
 			? Math.floor((12 - span) / 2) + 1
 			: 12 - span + 1;
+
+const dimensions = size === "small" ? { width: 800, height: 800 } : { width: 1600, height: 900 };
 ---
 
 <a
 	class={`project project--${size} reveal reveal--up reveal--fast reveal--once`.trim()}
 	href={href}
 	data-cursor-target
-	style={`--project-span:${span}; --project-start:${start}; --cursor-image: url("https://www.figma.com/api/mcp/asset/b843860c-de19-4c32-9f0f-5c981897ae1a");`}
+	style={`--project-span:${span}; --project-start:${start}; --cursor-image: url("/images/cursor-arrow.svg");`}
 >
 	<span class="cursor-icon" aria-hidden="true"></span>
 	<div class="project__info">
@@ -44,7 +46,15 @@ const start =
 		<p class="project__type">{category}</p>
 	</div>
 	<div class="project__media">
-		<img class="project__image" src={imageSrc} alt={imageAlt} loading="lazy" />
+		<img
+			class="project__image"
+			src={imageSrc}
+			alt={imageAlt}
+			width={dimensions.width}
+			height={dimensions.height}
+			loading="lazy"
+			decoding="async"
+		/>
 	</div>
 </a>
 
@@ -103,6 +113,7 @@ const start =
 	.project__type {
 		margin: 0;
 		color: var(--color-stone-400);
+		transition: color 200ms ease;
 	}
 
 	.project__subtitle {
@@ -119,6 +130,10 @@ const start =
 	}
 
 	.project:hover .project__name {
+		color: var(--color-orange-500);
+	}
+
+	.project:hover .project__type {
 		color: var(--color-orange-500);
 	}
 
